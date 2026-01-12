@@ -1,0 +1,50 @@
+# DegenWizard Configuration
+
+discord:
+  bot_name: "DegenWizard"
+  trading_channel_id: "1131011652062564413"
+  holder_role_id: "1209938549084790825"
+
+trading:
+  voting_window_seconds: 120  # 2 minutes
+  min_votes: 1
+
+  # Position sizing (scales with vote conviction)
+  min_position_pct: 0.2    # 20% at low conviction (50/50 vote)
+  max_position_pct: 0.4    # 40% at high conviction (unanimous)
+
+scheduling:
+  timezone: "America/Chicago"  # Central time
+  tick_interval_seconds: 10    # Main scheduler tick rate
+
+  # Fixed morning trade
+  morning_trade_time: "09:00"
+  morning_blackout_minutes: 30  # Block /propose 30 min before morning trade
+
+  # Hourly trades during day
+  trade_hours_start: 9   # 9am
+  trade_hours_end: 21    # 9pm
+  interval_variance_minutes: 15  # Randomize +/- 15 min
+
+  # Gap enforcement
+  min_gap_minutes: 2  # Between any two trades
+
+payouts:
+  min_payout_usd: 25
+  payout_share: 0.40
+  distribution:
+    first: 0.50
+    second: 0.30
+    third: 0.20
+  usdc_contract: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # USDC.e on Polygon (Polymarket uses this)
+
+reputation:
+  weight_increase_per_prediction: 0.1  # How much weight increases per prediction
+  max_weight: 1.0                  # Maximum reputation weight
+
+agents:
+  model_fast: "claude-3-5-haiku-20241022"
+  ta:
+    lookback_minutes: 60       # TA lookback window
+    candle_interval: "1m"      # Binance kline interval
+    last_returns_count: 8      # Recent 1m returns to include
